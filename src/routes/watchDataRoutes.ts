@@ -75,7 +75,7 @@ const upload = multer({ storage });
  *       500:
  *         description: Server error
  */
-router.post("/", isAuthenticated, upload.single("audio"), uploadWatchData);
+router.post("/", upload.single("audio"), uploadWatchData);
 
 /**
  * @openapi
