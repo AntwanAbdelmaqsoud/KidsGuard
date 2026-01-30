@@ -21,9 +21,6 @@ const upload = multer({ storage });
  *     description: Upload sensor data and optional audio recording from a smartwatch. Data is associated with the watch's serial number.
  *     tags:
  *       - Watch Data
- *     security:
- *       - bearerAuth: []
- *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
