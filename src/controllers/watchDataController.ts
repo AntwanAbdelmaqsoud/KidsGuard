@@ -58,12 +58,14 @@ export const uploadWatchData = async (req: Request, res: Response) => {
       batteryLevel: batteryLevel ? Number(batteryLevel) : null,
     });
 
-    const recordedAudioData = await RecordedAudio.create({
-      serialNumber,
-      recordedAudio: recordedAudio,
-      emotion: sentimentResponse.emotion,
-      confidence: sentimentResponse.confidence,
-    });
+    if (recordedAudio) {
+      const recordedAudioData = await RecordedAudio.create({
+        serialNumber,
+        recordedAudio: recordedAudio,
+        emotion: sentimentResponse.emotion,
+        confidence: sentimentResponse.confidence,
+      });
+    }
 
     res.status(201).json({
       message: "Watch data saved successfully",
