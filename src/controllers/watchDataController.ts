@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { WatchData } from "../models/WatchData";
 import { IUser, User } from "../models/User";
+import { RecordedAudio } from "../models/RecordedAudio";
 
 interface IsentimentResponse {
   emotion: string | null;
@@ -52,10 +53,14 @@ export const uploadWatchData = async (req: Request, res: Response) => {
       serialNumber,
       heartRate: heartRate ? Number(heartRate) : null,
       stepCount: stepCount ? Number(stepCount) : null,
-      recordedAudio,
       longitude: longitude ? Number(longitude) : null,
       latitude: latitude ? Number(latitude) : null,
       batteryLevel: batteryLevel ? Number(batteryLevel) : null,
+    });
+
+    const recordedAudioData = await RecordedAudio.create({
+      serialNumber,
+      recordedAudio: recordedAudio,
       emotion: sentimentResponse.emotion,
       confidence: sentimentResponse.confidence,
     });

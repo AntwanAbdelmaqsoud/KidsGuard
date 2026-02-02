@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes";
 import allowedZoneRoutes from "./routes/allowedZoneRoutes";
 import watchDataRoutes from "./routes/watchDataRoutes";
 import linkWatchRoutes from "./routes/linkWatchRoutes";
+import audioRoutes from "./routes/audioRoutes";
 import cors from "cors";
 import morgan from "morgan";
 import { setupSwagger } from "./config/swagger";
@@ -24,6 +25,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/allowed-zone", allowedZoneRoutes);
 app.use("/api/watch-data", watchDataRoutes);
 app.use("/api/link-watch", linkWatchRoutes);
+app.use("/api/audio", audioRoutes);
 
 // Catch-all for unknown routes (invalid calls)
 app.use((req: Request, res: Response) => {
