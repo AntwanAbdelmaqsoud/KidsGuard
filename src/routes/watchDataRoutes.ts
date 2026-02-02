@@ -122,6 +122,14 @@ router.post("/", upload.single("audio"), uploadWatchData);
  *                 batteryLevel:
  *                   type: number
  *                   nullable: true
+ *                 emotion:
+ *                   type: string
+ *                   nullable: true
+ *                   description: Detected emotion from audio
+ *                 confidence:
+ *                   type: number
+ *                   nullable: true
+ *                   description: Confidence level of detected emotion
  *                 createdAt:
  *                   type: string
  *                   format: date-time

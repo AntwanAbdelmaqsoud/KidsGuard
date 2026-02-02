@@ -15,13 +15,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "secret",
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
 app.use(morgan("dev")); //http request logger
 
 setupSwagger(app);

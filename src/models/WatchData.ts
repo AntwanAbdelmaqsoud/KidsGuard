@@ -8,6 +8,8 @@ export interface IWatchData extends Document {
   longitude: number | null;
   latitude: number | null;
   batteryLevel: number | null;
+  emotion: string | null;
+  confidence: number | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,6 +22,8 @@ const WatchDataSchema = new Schema<IWatchData>(
     longitude: { type: Number, required: false },
     latitude: { type: Number, required: false },
     batteryLevel: { type: Number, required: false },
+    emotion: { type: String, required: false },
+    confidence: { type: Number, required: false },
   },
   { timestamps: true },
 );

@@ -8,7 +8,6 @@ A Node.js/Express backend API for managing child smartwatch data, including loca
 - **Watch Management**: Link and manage multiple smartwatches via serial numbers
 - **Real-time Watch Data**: Track heart rate, step count, GPS location, battery level, and audio recordings
 - **Geofencing**: Create and manage allowed zones with radius-based alerts
-- **Data Retention**: Automatically maintains only the last 10 data points per watch device
 - **API Documentation**: Auto-generated Swagger/OpenAPI documentation
 
 ## Tech Stack
@@ -16,7 +15,7 @@ A Node.js/Express backend API for managing child smartwatch data, including loca
 - **Runtime**: Node.js with TypeScript
 - **Framework**: Express.js
 - **Database**: MongoDB (via Mongoose ODM)
-- **Authentication**: Passport.js (Local + Google OAuth)
+- **Authentication**: JWT tokens
 - **API Documentation**: Swagger UI
 - **Testing**: Jest with MongoDB Memory Server
 
@@ -77,7 +76,7 @@ npm install
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/childguard
+MONGODB_URI=mongodb://
 SESSION_SECRET=your-session-secret
 JWT_SECRET=your-jwt-secret
 GOOGLE_CLIENT_ID=your-google-client-id
@@ -178,19 +177,3 @@ http://localhost:3000/api-docs
 | `MONGODB_URI`    | MongoDB connection string | Yes                |
 | `SESSION_SECRET` | Express session secret    | Yes                |
 | `JWT_SECRET`     | JWT signing secret        | Yes                |
-
-## Security Features
-
-- Password hashing with bcrypt
-- JWT token-based authentication
-- Session management
-- CORS enabled
-- Input validation with Zod
-
-## License
-
-ISC
-
-## Author
-
-To be updated

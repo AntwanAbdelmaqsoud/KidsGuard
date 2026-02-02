@@ -2,6 +2,11 @@ import { Request, Response } from "express";
 import { WatchData } from "../models/WatchData";
 import { IUser, User } from "../models/User";
 
+interface IsentimentResponse {
+  emotion: string | null;
+  confidence: number | null;
+}
+
 // POST /api/watch-data
 export const uploadWatchData = async (req: Request, res: Response) => {
   try {
@@ -14,6 +19,34 @@ export const uploadWatchData = async (req: Request, res: Response) => {
       batteryLevel,
     } = req.body;
     const recordedAudio = req.file ? req.file.buffer : null;
+    let sentimentResponse: IsentimentResponse = {
+      emotion: null,
+      confidence: null,
+    };
+
+    if (req.file) {
+      // Multer changes the file buffer to Uint8Array, convert it back to Blob
+      let formData = new FormData();
+      formData.append(
+        "file",
+        new Blob([new Uint8Array(req.file.buffer)], {
+          type: req.file.mimetype,
+        }),
+        req.file.originalname,
+      );
+      try {
+        const response = await fetch(
+          "https://abedir-clstm-fastapi.hf.space/predict",
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
+        sentimentResponse = await response.json();
+      } catch (error) {
+        console.log("Error Sentiment Analysis", error);
+      }
+    }
 
     const watchData = await WatchData.create({
       serialNumber,
@@ -23,6 +56,8 @@ export const uploadWatchData = async (req: Request, res: Response) => {
       longitude: longitude ? Number(longitude) : null,
       latitude: latitude ? Number(latitude) : null,
       batteryLevel: batteryLevel ? Number(batteryLevel) : null,
+      emotion: sentimentResponse.emotion,
+      confidence: sentimentResponse.confidence,
     });
 
     res.status(201).json({
