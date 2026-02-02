@@ -30,3 +30,37 @@ export async function getAudioBySerialNumber(req: Request, res: Response) {
     res.status(500).json({ message: "Error retrieving audio data" });
   }
 }
+
+export async function getAudioFileById(req: Request, res: Response) {
+  try {
+    const { audioId } = req.params;
+    const userId = (req as any).user.id;
+
+    if (!audioId) {
+      return res.status(400).json({ message: "Audio ID is required" });
+    }
+
+    const audioRecord = await RecordedAudio.findById(audioId);
+    if (!audioRecord) {
+      return res.status(404).json({ message: "Audio record not found" });
+    }
+
+    const user = await User.findById(userId);
+    if (
+      !user ||
+      !user.serialNumbers ||
+      !user.serialNumbers.includes(audioRecord.serialNumber)
+    ) {
+      return res
+        .status(403)
+        .json({ message: "Forbidden - user does not own this watch" });
+    }
+
+    res.setHeader("Content-Type", "audio/wav");
+    res.setHeader("Content-length", audioRecord.recordedAudio.length);
+    res.send(audioRecord.recordedAudio);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving audio file" });
+  }
+}

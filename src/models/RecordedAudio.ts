@@ -2,7 +2,7 @@ import { Schema, model, Document } from "mongoose";
 
 export interface IRecordedAudio extends Document {
   serialNumber: string;
-  recordedAudio: Buffer | null;
+  recordedAudio: Buffer;
   emotion: string | null;
   confidence: number | null;
   createdAt: Date;
@@ -11,7 +11,7 @@ export interface IRecordedAudio extends Document {
 const RecordedAudioSchema = new Schema<IRecordedAudio>(
   {
     serialNumber: { type: String, required: true, index: true },
-    recordedAudio: { type: Buffer, required: false },
+    recordedAudio: { type: Buffer, required: true },
     emotion: { type: String, required: false },
     confidence: { type: Number, required: false },
   },

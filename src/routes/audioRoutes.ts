@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { isAuthenticated } from "../middlewares/isAuthenticated";
 
-import { getAudioBySerialNumber } from "../controllers/audioController";
+import {
+  getAudioBySerialNumber,
+  getAudioFileById,
+} from "../controllers/audioController";
 
 const router = Router(); // api/audio/
 
@@ -59,6 +62,41 @@ const router = Router(); // api/audio/
  *         description: Error retrieving audio data
  */
 router.get("/:serialNumber", isAuthenticated, getAudioBySerialNumber);
+
+/**
+ * @openapi
+ * /api/audio/file/{audioId}:
+ *   get:
+ *     summary: Get recorded audio file by audio ID
+ *     tags:
+ *       - Audio
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: audioId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Audio record ID
+ *     responses:
+ *       200:
+ *         description: Audio file retrieved successfully
+ *         content:
+ *           audio/*:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       400:
+ *         description: Audio ID is required
+ *       401:
+ *         description: Not authenticated
+ *       404:
+ *         description: Audio record not found
+ *       500:
+ *         description: Error retrieving audio file
+ */
+router.get("/file/:audioId", isAuthenticated, getAudioFileById);
 
 // router.delete("/:audioId", isAuthenticated, deleteAudioById);
 
