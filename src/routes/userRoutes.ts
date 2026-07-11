@@ -75,6 +75,7 @@ router.get("/me", isAuthenticated, getCurrentUserInfo);
  *       401:
  *         description: Not authenticated
  */
+
 router.put("/me", isAuthenticated, updateUserInformation);
 
 // Delete the currently authenticated user's account

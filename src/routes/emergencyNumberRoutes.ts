@@ -4,7 +4,6 @@ import {
   getEmergencyNumber,
   addEmergencyNumber,
 } from "../controllers/emergencyNumberController";
-
 const router = Router(); //api/emergency-number/
 
 /**

@@ -8,13 +8,4 @@ module.exports = {
   transform: {
     ...tsJestTransformCfg,
   },
-  roots: ["<rootDir>/src/tests"],
-  testMatch: ["**/?(*.)+(spec|test).[tj]s?(x)"],
-  moduleFileExtensions: ["ts", "js", "json", "node"],
-  collectCoverageFrom: [
-    "src/**/*.{ts,js}",
-    "!src/**/index.{ts,js}",
-    "!src/**/*.d.ts",
-  ],
-  setupFilesAfterEnv: ["<rootDir>/src/tests/setup.ts"],
 };
